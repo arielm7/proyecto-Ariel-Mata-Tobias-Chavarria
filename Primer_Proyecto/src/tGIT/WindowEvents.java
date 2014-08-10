@@ -24,7 +24,8 @@ public class WindowEvents implements WindowListener {
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		System.out.println("Se cerró la ventana");
+		game.endGame();
 		
 	}
 
