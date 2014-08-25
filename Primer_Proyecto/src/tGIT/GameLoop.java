@@ -44,12 +44,12 @@ public GameLoop(){
 
 		score = 0;
 		vidas = 10;    // Le asignamos un valor inicial al vidas
-		direccion = 4;    // Direccion hacia la derecha
+		direccion = 2;    // Direccion hacia la derecha
 		int posX = (int) (Math.random() *(WIDTH / 4));    // posicion en x es un cuarto del JFrame
 		int posY = (int) (Math.random() *(HEIGHT / 4));    // posicion en y es un cuarto del JFrame
 		
 		this.addKeyListener(this);
-		Image img_nave = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/src/tGIT/nave.png"));
+		Image img_nave = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/tGIT/nave.png"));
 		
 		animaNave = new Animacion();
 		animaNave.sumaCuadro(img_nave, 100);
@@ -112,7 +112,12 @@ public GameLoop(){
 			case 4: { //se mueve hacia derecha con la flecha derecha.
 				nave1.setPosX(nave1.getPosX() + (11 - vidas) * 2);
 				break;    	
-			}			
+			}	
+			case 5: { //se mueve hacia derecha con la flecha derecha.
+				nave1.setPosX(nave1.getPosX());
+				nave1.setPosY(nave1.getPosY());
+				break;    	
+			}		
 		}
 	
 		
@@ -147,10 +152,19 @@ public GameLoop(){
 	 * @param e es el <code>evento</code> que se genera en al soltar las teclas.
 	 */
     public void keyReleased(KeyEvent e){
+    	if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
+			direccion = 2;
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {    //Presiono flecha abajo
+			direccion = 2;
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {    //Presiono flecha izquierda
+			direccion = 2;
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {    //Presiono flecha derecha
+			direccion = 2;
+		}
     	
     }
 	
-	private void render(Graphics g){
+public void paint (Graphics g){
 		// Inicializan el DoubleBuffer
 		if (dbImage == null) {
 			dbImage = createImage(this.getSize().width, this.getSize().height);
