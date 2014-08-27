@@ -9,7 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Vector;
+
 
 import javax.swing.JFrame;
 
@@ -20,14 +20,12 @@ public class GameLoop extends JFrame implements Runnable,KeyListener{
 	boolean entrar;
 	Thread threadPrin;
 	
-	private int direccion;    // Direccion del elefante
-	private int vidas,dx=5,dy=5;    // vidas del elefante
-	private int score;   // el puntaje de usuario.
-	private final int MIN = -5;    //Limite minimo al generar el numero random. 
-	private final int MAX = 6;    //Limite maximo al generar el numero random.
+	
+	private int vidas,dx=0,dy=0;    
+	private int score;   
 	private static final int WIDTH = 1000;    //Ancho del JFrame
 	private static final int HEIGHT = 600;    //Alto del JFrame
-	private Image dbImage,img_nave,img_nave2,img_nave3,img_nave4,img_nave5,img_nave6,img_nave7,img_nave8,img_nave9,img_nave10,img_nave11;	// Imagen a proyectar
+	private Image dbImage,img_nave2,img_nave3,img_nave4,img_nave5,img_nave6,img_nave7,img_nave8,img_nave9,img_nave10,img_nave11;	// Imagen a proyectar
 	private Image gameover,fondo;	// Imagen al finalizar el juego.
 	private Graphics dbg;	// Objeto grafico   //Arreglo del archivo divido.
 	private long tiempoActual;	//Tiempo de control de la animación
@@ -44,7 +42,6 @@ public GameLoop(){
 
 		score = 0;
 		vidas = 10;    // Le asignamos un valor inicial al vidas
-		direccion = 2;    // Direccion hacia la derecha
 		int posX = (int) (Math.random() *(WIDTH / 4));    // posicion en x es un cuarto del JFrame
 		int posY = (int) (Math.random() *(HEIGHT / 4));    // posicion en y es un cuarto del JFrame
 		
@@ -76,7 +73,7 @@ public GameLoop(){
 		animaNave.sumaCuadro(img_nave11, 100);
 		
 		
-		nave1 = new Ship(posY, posY, img_nave2);
+		nave1 = new Ship(posX, posY, img_nave2);
 		threadPrin = new Thread(this);
 		threadPrin.start();
 		
@@ -111,36 +108,16 @@ public GameLoop(){
         //Guarda el tiempo actual
       	 tiempoActual += tiempoTranscurrido;
       	 
-      	 //Actualiza la animación del elefante en base al tiempo transcurrido
+      	 //Actualiza la animación de la nave en base al tiempo transcurrido
       	 animaNave.actualiza(tiempoTranscurrido);
 		
-		//Actualiza la animación del ratón en base al tiempo transcurrido
-        //animRaton.actualiza(tiempoTranscurrido);
+		
 		
 		score += 5;  // el score se acumula en 5
-		switch(direccion){
-			case 1: { //se mueve hacia arriba con la flecha arriba.
-				nave1.setPosY(nave1.getPosY() - dy);
-				break;    	
-			}     
-			case 2: { //se mueve hacia abajo con la flecha abajo.
+		
 				nave1.setPosY(nave1.getPosY() + dy);
-				break;    	
-			} 
-			case 3: { //se mueve hacia izquierda con la flecha izquierda.
-				nave1.setPosX(nave1.getPosX() - dx);
-				break;    	
-			}    
-			case 4: { //se mueve hacia derecha con la flecha derecha.
 				nave1.setPosX(nave1.getPosX() + dx);
-				break;    	
-			}	
-			case 5: { //se mueve hacia derecha con la flecha derecha.
-				nave1.setPosX(nave1.getPosX()+dx);
-				nave1.setPosY(nave1.getPosY()+dy);
-				break;    	
-			}		
-		}
+		
 	
 		
 		
@@ -149,13 +126,13 @@ public GameLoop(){
 	
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
-			direccion = 1;
+			dy=-5;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {    //Presiono flecha abajo
-			direccion = 2;
+			dy=5;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {    //Presiono flecha izquierda
-			direccion = 3;
+			dx=-5;
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {    //Presiono flecha derecha
-			direccion = 4;
+			dx=5;
 		}
 	}
     
@@ -175,13 +152,13 @@ public GameLoop(){
 	 */
     public void keyReleased(KeyEvent e){
     	if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
-			direccion = 5;
+			dy=0;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {    //Presiono flecha abajo
-			direccion = 5;
+			dy=0;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {    //Presiono flecha izquierda
-			direccion = 5;
+			dx=0;
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {    //Presiono flecha derecha
-			direccion = 5;
+			dx=0;
 		}
     	
     }
